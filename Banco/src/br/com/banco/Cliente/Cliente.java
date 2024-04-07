@@ -1,7 +1,7 @@
-package br.Cliente;
+package br.com.banco.Cliente;
 
 import java.util.ArrayList;
-import br.Contas.*;
+import br.com.banco.Contas.*;
 
 public class Cliente {
     private String nome;

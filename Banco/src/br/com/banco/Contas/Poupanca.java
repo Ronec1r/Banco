@@ -1,5 +1,5 @@
-package br.Contas;
-import br.Cliente.*;
+package br.com.banco.Contas;
+import br.com.banco.Cliente.*;
 
 public class Poupanca extends Conta {
 
@@ -11,7 +11,7 @@ public class Poupanca extends Conta {
 
     @Override
     protected void Aplicarjuros() {
-
+        this.setSaldo(this.saldo+= (float) (this.saldo*0.05));
     }
 
 
