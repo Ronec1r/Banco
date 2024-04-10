@@ -1,4 +1,9 @@
 package br.com.banco.Operacoes;
+import java.util.Date;
 
-public class SaquePoupanca {
+public class SaquePoupanca implements Operacao{
+    @Override
+    public void Operar(Date data){
+
+    }
 }

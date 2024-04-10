@@ -11,7 +11,7 @@ public class Cliente {
     public Cliente(String nome, int cpf) {
         this.nome = nome;
         this.cpf = cpf;
-        System.out.println("Novo cliente cadastrado com o nome : "+this.nome);
+        System.out.println("Cliente cadastrado com nome "+this.nome);
     }
 
     public String getNome() {

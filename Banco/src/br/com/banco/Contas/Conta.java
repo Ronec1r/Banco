@@ -4,6 +4,7 @@ import br.com.banco.Operacoes.Registro;
 import br.com.banco.Operacoes.Operacao;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Date;
 
 public abstract class Conta {
     protected static int sequence = 1 ;
@@ -13,7 +14,9 @@ public abstract class Conta {
     protected ArrayList<Registro> registros = new ArrayList<>();
     protected float taxajuros;
     protected int senha;
+    protected boolean status_conta = true;
 
+    Date data = new Date();
     Scanner scan = new Scanner(System.in);
 
     public Conta(Cliente titular, int senha) {
@@ -22,7 +25,6 @@ public abstract class Conta {
         this.taxajuros = 0;
         this.senha = senha;
     }
-
 
     public float getSaldo() {
         return saldo;
@@ -36,48 +38,49 @@ public abstract class Conta {
         return numeroconta;
     }
 
-
-    public float getTaxajuros() {
-        return taxajuros;
-    }
-
     public void setTaxajuros(float taxajuros) {
         this.taxajuros = taxajuros;
     }
 
-    public ArrayList<Registro> getRegistros() {
-        return registros;
+    public void setRegistros(Registro registro) {
+        this.registros.add(registro);
     }
-
-    public void setRegistros(ArrayList<Registro> registros) {
-        this.registros = registros;
-    }
-
 
     protected abstract void Aplicarjuros();
 
-    public void RealizarTransacao(Operacao operacao){
-
+    public void realizarTransacao(Operacao operacao){
+        operacao.Operar(data);
     }
 
-    private Boolean ValidarSenha(){
-        System.out.println("Informe a senha : ");
-        int senha_informada = scan.nextInt();
-        return senha_informada==this.senha;
+    private Boolean validarSenha(){
+        if (status_conta){
+            System.out.println("Informe a senha, você possui 3 tentativas");
+            for (int i=0; i<3; i++){
+                System.out.println(":");
+                int senha_informada = scan.nextInt();
+                if (senha_informada==this.senha){
+                    System.out.println("Senha correta!");
+                    return true;
+                }else{
+                    System.out.println("Senha inválida!");
+                }
+            }
+            status_conta = false;
+        }
+        System.out.println("A conta está bloqueada!");
+        return status_conta;
     }
 
-    public void ExibirInformacoes(){
-        if(ValidarSenha()) {
+    public void exibirInformacoes(){
+        if(validarSenha()) {
             System.out.println("Titular=" + this.titular.getNome() +
                     ", saldo=" + this.saldo +
-                    ", numeroconta=" + this.numeroconta);
-        }else{
-            System.out.println("Senha incorreta!");
+                    ", número da conta=" + this.numeroconta);
         }
     }
 
-    public void ExibirTransacao(){
-        if (ValidarSenha()) {
+    public void exibirTransacao(){
+        if (validarSenha()) {
             int count = 0;
             if (!registros.isEmpty()) {
                 for (Registro value : registros) {
@@ -90,8 +93,6 @@ public abstract class Conta {
             } else {
                 System.out.println("Não possui registro de operação!");
             }
-        }else{
-            System.out.println("Senha incorreta!");
         }
     }
 }
