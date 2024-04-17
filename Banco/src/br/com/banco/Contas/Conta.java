@@ -1,5 +1,6 @@
 package br.com.banco.Contas;
 import br.com.banco.Cliente.*;
+import br.com.banco.Operacoes.Deposito;
 import br.com.banco.Operacoes.Registro;
 import br.com.banco.Operacoes.Operacao;
 import java.util.ArrayList;
@@ -49,7 +50,13 @@ public abstract class Conta {
     protected abstract void Aplicarjuros();
 
     public void realizarTransacao(Operacao operacao){
-        operacao.Operar(data);
+        if(operacao.getClass()==Deposito.class) {
+            operacao.Operar(data);
+        }else{
+            if (this.validarSenha()){
+                operacao.Operar(data);
+            }
+        }
     }
 
     private Boolean validarSenha(){

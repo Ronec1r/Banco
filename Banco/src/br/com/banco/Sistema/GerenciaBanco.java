@@ -4,6 +4,9 @@ import br.com.banco.Contas.Conta;
 import br.com.banco.Contas.Corrente;
 import br.com.banco.Contas.Poupanca;
 import br.com.banco.Operacoes.Deposito;
+import br.com.banco.Operacoes.SaqueCorrente;
+import br.com.banco.Operacoes.SaquePoupanca;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,6 +29,7 @@ public class GerenciaBanco {
                 }
             }
         }
+        System.out.println("Conta não encontrada!");
         return null;
     }
 
@@ -97,6 +101,16 @@ public class GerenciaBanco {
                 Conta conta  = validarConta();
                 if (conta!=null){
                     conta.realizarTransacao(new Deposito(conta));
+                }
+            } else if (escolha == 6) {
+                System.out.println("Realizando saque!");
+                Conta conta = validarConta();
+                if (conta!=null){
+                    if (conta.getClass()==Corrente.class){
+                        conta.realizarTransacao(new SaqueCorrente(conta));
+                    }else{
+                        conta.realizarTransacao(new SaquePoupanca(conta));
+                    }
                 }
             }
         }
