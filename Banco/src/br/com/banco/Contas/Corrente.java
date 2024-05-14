@@ -32,4 +32,14 @@ public class Corrente extends Conta{
         this.setSaldo(this.saldo-= (float) (this.saldo*0.05));
     }
 
+    @Override
+    public void exibirInformacoes(){
+        if(super.validarSenha()) {
+            System.out.println("Titular=" + this.titular.getNome() +
+                    ", saldo=" + this.getSaldo() +
+                    ", número da conta=" + this.getNumeroconta() +
+                    ", limite de crédito=" + this.getLimitecredito());
+        }
+    }
+
 }

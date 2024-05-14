@@ -3,9 +3,7 @@ import br.com.banco.Cliente.Cliente;
 import br.com.banco.Contas.Conta;
 import br.com.banco.Contas.Corrente;
 import br.com.banco.Contas.Poupanca;
-import br.com.banco.Operacoes.Deposito;
-import br.com.banco.Operacoes.SaqueCorrente;
-import br.com.banco.Operacoes.SaquePoupanca;
+import br.com.banco.Operacoes.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -111,6 +109,32 @@ public class GerenciaBanco {
                     }else{
                         conta.realizarTransacao(new SaquePoupanca(conta));
                     }
+                }
+            } else if (escolha == 7) {
+                System.out.println("Realizando transferência!");
+                Conta conta_origem = validarConta();
+                if (conta_origem != null) {
+                    System.out.println("Conta Destino: ");
+                    Conta conta_destino = validarConta();
+                    if(conta_destino != null){
+                        conta_origem.realizarTransacao(new Transferencia(conta_origem, conta_destino));
+                    }
+                }
+            } else if (escolha == 8) {
+                System.out.println("Realizando pagamento!");
+                Conta conta = validarConta();
+                if (conta!=null){
+                    if (conta.getClass()==Corrente.class){
+                        conta.realizarTransacao(new PagamentoCorrente(conta));
+                    }else{
+                        conta.realizarTransacao(new PagamentoPoupanca(conta));
+                    }
+                }
+            } else if (escolha == 9) {
+                System.out.println("Desbloqueando conta!");
+                Conta conta = validarConta();
+                if (conta != null) {
+                    conta.desbloquearConta();
                 }
             }
         }

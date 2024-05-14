@@ -15,7 +15,7 @@ public abstract class Conta {
     protected ArrayList<Registro> registros = new ArrayList<>();
     protected float taxajuros;
     protected int senha;
-    protected boolean status_conta = true;
+    protected boolean statusConta = true;
 
     Date data = new Date();
     Scanner scan = new Scanner(System.in);
@@ -47,7 +47,38 @@ public abstract class Conta {
         this.registros.add(registro);
     }
 
+    public boolean getStatusConta(){
+        return statusConta;
+    }
+
+    private void setStatusConta(boolean status){
+        this.statusConta = status;
+    }
+
+    private void setSenha(int senha){
+        this.senha = senha;
+    }
+
     protected abstract void Aplicarjuros();
+
+
+    public void desbloquearConta(){
+        if(!this.statusConta){
+            System.out.println("Informe o CPF do proprietário da conta:");
+            int cpf = scan.nextInt();
+            if(cpf==this.titular.getCpf()){
+                System.out.println("Informe uma nova senha para a conta :");
+                int senha = scan.nextInt();
+                this.setSenha(senha);
+                this.setStatusConta(true);
+                System.out.println("Conta desbloqueada!");
+            }else{
+                System.out.println("CPF inválido!");
+            }
+        }else{
+            System.out.println("A conta não está bloqueada");
+        }
+    }
 
     public void realizarTransacao(Operacao operacao){
         if(operacao.getClass()==Deposito.class) {
@@ -59,8 +90,8 @@ public abstract class Conta {
         }
     }
 
-    private Boolean validarSenha(){
-        if (status_conta){
+    protected Boolean validarSenha(){
+        if (statusConta){
             System.out.println("Informe a senha, você possui 3 tentativas");
             for (int i=0; i<3; i++){
                 System.out.println(":");
@@ -72,10 +103,10 @@ public abstract class Conta {
                     System.out.println("Senha inválida!");
                 }
             }
-            status_conta = false;
+            statusConta = false;
         }
         System.out.println("A conta está bloqueada!");
-        return status_conta;
+        return statusConta;
     }
 
     public void exibirInformacoes(){

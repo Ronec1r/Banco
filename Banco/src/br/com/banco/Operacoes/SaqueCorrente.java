@@ -43,7 +43,6 @@ public class SaqueCorrente implements Operacao{
             if (restante<0){
                 this.conta_destino.setSaldo(0);
                 this.conta_destino.setLimitecredito(this.conta_destino.getLimitecredito()+restante);
-                System.out.println(this.conta_destino.getLimitecredito());
             }else{
                 this.conta_destino.setSaldo(restante);
             }
